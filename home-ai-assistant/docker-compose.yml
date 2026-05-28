@@ -1,0 +1,30 @@
+services:
+  home-ai:
+    image: home-ai-assistant:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        WHISPER_MODEL: ${WHISPER_MODEL:-base}
+    container_name: home-ai-assistant
+    restart: unless-stopped
+    ports:
+      - "${HOST_PORT:-8080}:8080"
+    volumes:
+      - ${DATA_PATH:-./data}:/data
+    environment:
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - SECRET_KEY=${SECRET_KEY:-change-me-in-production}
+      - DATA_DIR=/data
+      - WHISPER_MODEL=${WHISPER_MODEL:-base}
+      - WHISPER_DEVICE=cpu
+      - WHISPER_COMPUTE_TYPE=int8
+      - TTS_VOICE=${TTS_VOICE:-zh-CN-XiaoxiaoNeural}
+      - TZ=${TZ:-Asia/Shanghai}
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
