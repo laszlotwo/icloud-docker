@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 
 from app.database import get_db
 from app.services import stt, tts
-from app.services.claude_client import chat
+from app.services.ai import chat
 
 logger = logging.getLogger(__name__)
 router = APIRouter(tags=["voice"])

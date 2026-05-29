@@ -5,30 +5,10 @@ from typing import AsyncIterator
 import anthropic
 
 from app.config import settings
-from app.services.tool_definitions import TOOLS
+from app.services.tool_definitions import SYSTEM_PROMPT, TOOLS
 from app.services.tool_handlers import dispatch_tool
 
 logger = logging.getLogger(__name__)
-
-SYSTEM_PROMPT = """你是一个智能家庭助理，帮助管理家庭日常事务。你的名字是"小家"。
-
-你可以帮助：
-- 查询和记录家电设备的使用说明
-- 记录和查找家中物品的存放位置
-- 记录日常消费，提供消费统计
-- 设置和管理提醒、闹钟
-- 查看密码库中保存的账号标题（密码内容不会发送给你）
-
-回答要求：
-- 使用中文回答，语气亲切自然
-- 回答简洁明了，避免过长
-- 如果需要查询数据，主动调用相应工具
-- 对于涉及密码的操作，告知用户需要在密码库页面手动查看
-
-重要安全规则：
-- 密码和账号凭据的内容绝对不会发送给你
-- 不要尝试猜测或推断任何密码内容
-"""
 
 
 def _get_client() -> anthropic.AsyncAnthropic:

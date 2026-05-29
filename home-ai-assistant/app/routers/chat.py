@@ -9,7 +9,7 @@ from sqlalchemy.orm import Session
 from app.database import get_db
 from app.dependencies import get_vault_key
 from app.models.reminder import ConversationHistory
-from app.services.claude_client import chat_stream
+from app.services.ai import chat_stream
 
 router = APIRouter(prefix="/api/v1/chat", tags=["chat"])
 
